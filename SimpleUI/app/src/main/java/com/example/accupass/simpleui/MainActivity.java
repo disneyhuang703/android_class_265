@@ -6,6 +6,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -13,8 +14,8 @@ public class MainActivity extends AppCompatActivity {
 
     TextView textView;
     EditText editText;
-
-
+    RadioGroup radioGroup;
+    String sex = "Male";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
        //按下button後希望把text置換成textField輸入的文字
 
+        radioGroup = (RadioGroup)findViewById(R.id.radioGroup);
 
         //setOnkeyListner是一個interface,呼叫它時，就會自動帶出很多method來
         editText.setOnKeyListener(new View.OnKeyListener() {
@@ -56,14 +58,33 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId){
+
+                if(checkedId == R.id.maleRadioButton){
+                    sex = "male";
+                }
+
+                else if(checkedId == R.id.femaleRadioButton)
+                {
+                    sex = "Female";
+                }
+            }
+
+
+        });
+
 
     }
+
 
 
     public void click(View view)
     {
 
         String text = editText.getText().toString();
+        text = text + "sex:" + sex;
         textView.setText(text);
         editText.setText("");
 
