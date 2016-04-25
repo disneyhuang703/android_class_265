@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * Created by accupass on 16/4/25.
  */
 public class OrderAdapter extends BaseAdapter{
-
+//把資料存入inflater裡面，並讓layout長的像我們要的樣子
     ArrayList<Order> orders;
     LayoutInflater inflater;
 
@@ -43,6 +43,8 @@ public class OrderAdapter extends BaseAdapter{
         return 0;
     }
 
+
+    //
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -54,25 +56,30 @@ public class OrderAdapter extends BaseAdapter{
         if(convertView == null)
         {
             convertView = inflater.inflate(R.layout.listview_item, null);
-
+        //用holder抓住值來避免一直使用findViewbyId（佔資源）
             holder = new Holder();
 
             holder.drinkName = (TextView)convertView.findViewById(R.id.drinkName);
             holder.note = (TextView)convertView.findViewById(R.id.note);
+            holder.storeInfo = (TextView)convertView.findViewById(R.id.store);
+
 
             convertView.setTag(holder);
 
         }
 
         else{
-            
+
             holder = (Holder)convertView.getTag();
 
         }
 
+        //拿到holder後，我們再就holder中的component來做設定
+        //從order class中去拿各個呼叫的值，最後再把convertView的內容return回去
 
         holder.drinkName.setText(orders.get(position).drinkName);
         holder.note.setText(orders.get(position).note);
+        holder.storeInfo.setText(orders.get(position).storeInfo);
 
         return convertView;
 
@@ -81,6 +88,7 @@ public class OrderAdapter extends BaseAdapter{
     class Holder{
         TextView drinkName;
         TextView note;
+        TextView storeInfo;
     }
 
 
