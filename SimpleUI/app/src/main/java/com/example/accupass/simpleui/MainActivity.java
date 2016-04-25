@@ -5,12 +5,16 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,10 +22,13 @@ public class MainActivity extends AppCompatActivity {
     TextView textView;
     EditText editText;
     RadioGroup radioGroup;
+    ArrayList<Order> orders;
+
+
     String drinkName = "black tea";
     String note = "";
     CheckBox checkBox;
-
+    ListView listView;
 
 
     @Override
@@ -30,9 +37,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         textView = (TextView)findViewById(R.id.textView);
         editText = (EditText)findViewById(R.id.editText);
-
         radioGroup = (RadioGroup)findViewById(R.id.radioGroup);
         checkBox = (CheckBox)findViewById(R.id.HideCheckBox);
+        listView = (ListView)findViewById(R.id.listView);
+        orders = new ArrayList<>();
+
 
         //setOnkeyListner是一個interface,呼叫它時，就會自動帶出很多method來
         editText.setOnKeyListener(new View.OnKeyListener() {
@@ -69,12 +78,23 @@ public class MainActivity extends AppCompatActivity {
                     RadioButton radioButton = (RadioButton)findViewById(checkedId);
                     drinkName = radioButton.getText().toString();
                 }
-            
+
 
         });
 
+        setupListView();
 
 
+
+
+    }
+
+
+    //qau orders裡面的東西render到layout中
+    void setupListView()
+    {
+        OrderAdapter adapter = new OrderAdapter(this, orders);
+        listView.setAdapter(adapter);
 
     }
 
@@ -86,8 +106,16 @@ public class MainActivity extends AppCompatActivity {
         note = editText.getText().toString();
         String text = note;
         textView.setText(text);
+
+        Order order = new Order();
+        order.drinkName = drinkName;
+        order.note = note;
+
+        orders.add(order);
+
         editText.setText("");
 
+        setupListView();
 
     }
 
