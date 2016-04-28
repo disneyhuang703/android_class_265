@@ -8,16 +8,17 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by accupass on 16/4/25.
  */
 public class OrderAdapter extends BaseAdapter{
 //把資料存入inflater裡面，並讓layout長的像我們要的樣子
-    ArrayList<Order> orders;
+    List<Order> orders;
     LayoutInflater inflater;
 
-    public OrderAdapter(Context context, ArrayList<Order> orders)
+    public OrderAdapter(Context context, List<Order> orders)
     {
         this.inflater = LayoutInflater.from(context);
         this.orders = orders;
@@ -77,9 +78,9 @@ public class OrderAdapter extends BaseAdapter{
         //拿到holder後，我們再就holder中的component來做設定
         //從order class中去拿各個呼叫的值，最後再把convertView的內容return回去
 
-        holder.drinkName.setText(orders.get(position).drinkName);
-        holder.note.setText(orders.get(position).note);
-        holder.storeInfo.setText(orders.get(position).storeInfo);
+        holder.drinkName.setText(orders.get(position).getDrinkName());
+        holder.note.setText(orders.get(position).getNote());
+        holder.storeInfo.setText(orders.get(position).getStoreInfo());
 
         return convertView;
 
