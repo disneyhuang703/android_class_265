@@ -7,7 +7,7 @@ import io.realm.RealmObject;
  */
 public class Order extends RealmObject{
     private String note;
-    private String drinkName;
+    private String menuResult;
     private String storeInfo;
 
     public String getNote() {
@@ -18,12 +18,12 @@ public class Order extends RealmObject{
         this.note = note;
     }
 
-    public String getDrinkName() {
-        return drinkName;
+    public String getMenuResult() {
+        return menuResult;
     }
 
     public void setDrinkName(String drinkName) {
-        this.drinkName = drinkName;
+        this.menuResult = drinkName;
     }
 
     public String getStoreInfo() {

@@ -94,6 +94,7 @@
         android:text="Menu"
         android:id="@+id/button2"
         android:layout_above="@+id/listView"
-        android:layout_toRightOf="@+id/button" />
+        android:layout_toRightOf="@+id/button"
+        android:onClick="goToMenu" />
 
 </RelativeLayout>

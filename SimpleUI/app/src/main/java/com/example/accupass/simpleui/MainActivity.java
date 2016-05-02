@@ -1,11 +1,13 @@
 package com.example.accupass.simpleui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -34,6 +36,10 @@ import io.realm.internal.Table;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    private static final int REQUEST_CODE_MENU_ACTIVITY = 0;
+
+
     TextView textView;
     EditText editText;
     RadioGroup radioGroup;
@@ -43,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
     CheckBox checkBox;
     ListView listView;
     Spinner spinner;
+
+    String menuResults = "";
+
     Context context;
 
     SharedPreferences sp;
@@ -66,10 +75,10 @@ public class MainActivity extends AppCompatActivity {
         editor = sp.edit();
 
         // Create a RealmConfiguration which is to locate Realm file in package's "files" directory.
-        //RealmConfiguration realmConfig = new RealmConfiguration.Builder(this).build();
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder(this).deleteRealmIfMigrationNeeded().build();
 
         // Get a Realm instance for this thread
-        //realm = Realm.getInstance(realmConfig);
+        realm = Realm.getInstance(realmConfig);
 
 
 
@@ -130,18 +139,18 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        //setupListView();
+        setupListView();
         setupSpinner();
 
     }
 
-    //void setupListView()
-    //{
-      //  RealmResults results = realm.allObjects(Order.class);
+    void setupListView()
+    {
+        RealmResults results = realm.allObjects(Order.class);
 
-        //OrderAdapter adapter = new OrderAdapter(this, results.subList(0, results.size()));
-        //listView.setAdapter(adapter);
-    //}
+        OrderAdapter adapter = new OrderAdapter(this, results.subList(0, results.size()));
+        listView.setAdapter(adapter);
+    }
 
     void  setupSpinner()
     {
@@ -158,17 +167,80 @@ public class MainActivity extends AppCompatActivity {
         textView.setText(text);
 
         Order order = new Order();
-        order.setDrinkName(drinkName);
+        order.setDrinkName(menuResults);
         order.setNote(note);
         order.setStoreInfo((String)spinner.getSelectedItem());
 
         // Persist your data easily
-        //realm.beginTransaction();
-        //realm.copyToRealm(order);
-        //realm.commitTransaction();
+        realm.beginTransaction();
+        realm.copyToRealm(order);
+        realm.commitTransaction();
 
         editText.setText("");
+        menuResults = "";
 
-        //setupListView();
+        setupListView();
     }
+
+    public void goToMenu(View view)
+    {
+        Intent intent = new Intent();
+
+        intent.setClass(this, DrinkMenuActivity.class);
+
+        startActivityForResult(intent, REQUEST_CODE_MENU_ACTIVITY);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE_MENU_ACTIVITY)
+        {
+            if(resultCode == RESULT_OK)
+            {
+                menuResults = data.getStringExtra("result");
+
+            }
+
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("debug", "Main Activity OnStart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("debug", "Main Activity OnResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("debug", "Main Activity OnPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("debug", "Main Activity OnStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("debug", "Main Activity OnDestroy");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("debug", "Main Activity OnRestart");
+    }
+
+
 }
