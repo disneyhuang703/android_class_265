@@ -66,8 +66,7 @@
         android:text="Hide sex"
         android:id="@+id/HideCheckBox"
         android:layout_alignBottom="@+id/button"
-        android:layout_toRightOf="@+id/button"
-        android:layout_toEndOf="@+id/button"
+        android:layout_toRightOf="@+id/button2"
         android:layout_marginLeft="29dp"
         android:layout_marginStart="29dp"
         android:checked="false"
@@ -88,5 +87,13 @@
         android:layout_below="@+id/radioGroup"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Menu"
+        android:id="@+id/button2"
+        android:layout_above="@+id/listView"
+        android:layout_toRightOf="@+id/button" />
 
 </RelativeLayout>

@@ -8,29 +8,22 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
- * Created by accupass on 16/4/28.
+ * Created by user on 2016/4/28.
  */
 public class Utils {
 
-    public static void writeFile(Context context, String fileName, String content) throws IOException
+    public static void writeFile(Context context, String fileName, String content)
     {
         try {
-            //MODE_APPEND是累加的，PRIVATE是後者蓋掉前者的
             FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_APPEND);
-
             fos.write(content.getBytes());
             fos.close();
-
-        } catch
-      (FileNotFoundException e){
-        e.printStackTrace();
-    } catch (IOException e){
-        e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
-
-    }
-
 
     public static String readFile(Context context, String fileName)
     {
@@ -46,10 +39,6 @@ public class Utils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return "";
-
     }
-
-
 }
